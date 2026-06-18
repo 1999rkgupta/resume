@@ -41,10 +41,10 @@ export default function Contact() {
       // EmailJS - Replace these with your actual IDs from emailjs.com
       // Service ID, Template ID, Public Key
       await emailjs.sendForm(
-        'service_portfolio',     // Replace with your EmailJS Service ID
-        'template_contact',      // Replace with your EmailJS Template ID
+        'service_pmvnpke',     // Replace with your EmailJS Service ID
+        'template_fkbayes',      // Replace with your EmailJS Template ID
         formRef.current,
-        'YOUR_PUBLIC_KEY'        // Replace with your EmailJS Public Key
+        'RVQ_Jw3kZSdvBRvPp'        // Replace with your EmailJS Public Key
       );
       setStatus('success');
       formRef.current.reset();
