@@ -1,27 +1,27 @@
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { FiPhone, FiMail, FiMapPin, FiSend } from 'react-icons/fi';
-import { FaWhatsapp } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { FiPhone, FiMail, FiMapPin, FiSend } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
 
 const contactInfo = [
   {
     icon: <FiPhone />,
-    label: 'Phone',
-    value: '+91 9102943849',
-    href: 'tel:+919102943849',
+    label: "Phone",
+    value: "+91 9102943849",
+    href: "tel:+919102943849",
   },
   {
     icon: <FiMail />,
-    label: 'Email',
-    value: '1999rkgupta@gmail.com',
-    href: 'mailto:1999rkgupta@gmail.com',
+    label: "Email",
+    value: "1999rkgupta@gmail.com",
+    href: "mailto:1999rkgupta@gmail.com",
   },
   {
     icon: <FiMapPin />,
-    label: 'Location',
-    value: 'Bangalore, India',
+    label: "Location",
+    value: "Bangalore, India",
     href: null,
   },
 ];
@@ -41,16 +41,16 @@ export default function Contact() {
       // EmailJS - Replace these with your actual IDs from emailjs.com
       // Service ID, Template ID, Public Key
       await emailjs.sendForm(
-        'service_pmvnpke',     // Replace with your EmailJS Service ID
-        'template_fkbayes',      // Replace with your EmailJS Template ID
+        "service_pmvnpke", // Replace with your EmailJS Service ID
+        "template_fkbayes", // Replace with your EmailJS Template ID
         formRef.current,
-        'RVQ_Jw3kZSdvBRvPp'        // Replace with your EmailJS Public Key
+        "RVQ_Jw3kZSdvBRvPp", // Replace with your EmailJS Public Key
       );
-      setStatus('success');
+      setStatus("success");
       formRef.current.reset();
     } catch (error) {
-      console.error('EmailJS error:', error);
-      setStatus('error');
+      console.error("EmailJS error:", error);
+      setStatus("error");
     } finally {
       setSending(false);
       setTimeout(() => setStatus(null), 5000);
@@ -61,14 +61,14 @@ export default function Contact() {
     <section className="section" id="contact">
       <div className="container">
         <motion.div
-          style={{ textAlign: 'center', marginBottom: '20px' }}
+          style={{ textAlign: "center", marginBottom: "20px" }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle" style={{ margin: '0 auto' }}>
+          <p className="section-subtitle" style={{ margin: "0 auto" }}>
             Have a project in mind? Let's work together!
           </p>
         </motion.div>
@@ -86,7 +86,10 @@ export default function Contact() {
                 key={i}
                 className="contact-info-card"
                 href={info.href}
-                style={{ textDecoration: 'none', cursor: info.href ? 'pointer' : 'default' }}
+                style={{
+                  textDecoration: "none",
+                  cursor: info.href ? "pointer" : "default",
+                }}
                 initial={{ opacity: 0, x: -30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
@@ -120,7 +123,11 @@ export default function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
+            <form
+              ref={formRef}
+              className="contact-form"
+              onSubmit={handleSubmit}
+            >
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="contact-name">Name</label>
@@ -144,15 +151,28 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="contact-subject">Subject</label>
-                <input
-                  type="text"
-                  id="contact-subject"
-                  name="subject"
-                  placeholder="What's this about?"
-                  required
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="contact-mobile">
+                    Mobile Number (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    id="contact-mobile"
+                    name="from_mobile"
+                    placeholder="e.g. +91 98765 43210"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="contact-subject">Subject</label>
+                  <input
+                    type="text"
+                    id="contact-subject"
+                    name="subject"
+                    placeholder="What's this about?"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="form-group">
@@ -170,13 +190,17 @@ export default function Contact() {
                 type="submit"
                 className="btn-primary"
                 disabled={sending}
-                style={{ justifyContent: 'center', width: '100%', opacity: sending ? 0.7 : 1 }}
+                style={{
+                  justifyContent: "center",
+                  width: "100%",
+                  opacity: sending ? 0.7 : 1,
+                }}
               >
                 <FiSend />
-                <span>{sending ? 'Sending...' : 'Send Message'}</span>
+                <span>{sending ? "Sending..." : "Send Message"}</span>
               </button>
 
-              {status === 'success' && (
+              {status === "success" && (
                 <motion.div
                   className="form-status success"
                   initial={{ opacity: 0, y: 10 }}
@@ -186,13 +210,14 @@ export default function Contact() {
                 </motion.div>
               )}
 
-              {status === 'error' && (
+              {status === "error" && (
                 <motion.div
                   className="form-status error"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  ❌ Something went wrong. Please try again or contact me directly.
+                  ❌ Something went wrong. Please try again or contact me
+                  directly.
                 </motion.div>
               )}
             </form>
