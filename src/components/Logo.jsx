@@ -81,18 +81,22 @@ export default function Logo({ size = 40, className = "" }) {
           &lt;
         </motion.span>
         
-        {/* Name Letters */}
-        <span className="loader-name-container">
-          {name.split("").map((char, index) => (
-            <motion.span
-              key={index}
-              variants={letterVariants}
-              style={{ display: "inline-block", whiteSpace: char === " " ? "pre" : "normal" }}
-              className="loader-name-char"
-            >
-              {char}
-            </motion.span>
-          ))}
+        {/* Name Words */}
+        <span className="loader-name-container" style={{ display: "inline-flex", gap: "0.2em", flexWrap: "nowrap" }}>
+          <motion.span
+            variants={letterVariants}
+            className="loader-name-word"
+            style={{ display: "inline-block" }}
+          >
+            Ranjan
+          </motion.span>
+          <motion.span
+            variants={letterVariants}
+            className="loader-name-word"
+            style={{ display: "inline-block" }}
+          >
+            Gupta
+          </motion.span>
         </span>
         
         {/* Right Bracket */}

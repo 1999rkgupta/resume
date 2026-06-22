@@ -58,7 +58,7 @@ export default function Navbar({ onLogoClick }) {
         className={`navbar ${scrolled ? 'scrolled' : ''}`}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="container">
           <a className="nav-logo" href="#" onClick={(e) => { e.preventDefault(); onLogoClick ? onLogoClick() : scrollTo('home'); }}>

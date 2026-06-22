@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { FiPhone, FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
@@ -26,11 +25,44 @@ const contactInfo = [
   },
 ];
 
+const headerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const titleVariants = {
+  hidden: { opacity: 0, y: -50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
+
+const subtitleVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
+
+const leftCardsContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 }
+  }
+};
+
+const leftCardVariants = {
+  hidden: { opacity: 0, x: -100, rotateY: 25, transformPerspective: 1200 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    rotateY: 0, 
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } 
+  }
+};
+
 export default function Contact() {
   const formRef = useRef(null);
   const [status, setStatus] = useState(null); // 'success' | 'error' | null
   const [sending, setSending] = useState(false);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,13 +70,11 @@ export default function Contact() {
     setStatus(null);
 
     try {
-      // EmailJS - Replace these with your actual IDs from emailjs.com
-      // Service ID, Template ID, Public Key
       await emailjs.sendForm(
-        "service_pmvnpke", // Replace with your EmailJS Service ID
-        "template_fkbayes", // Replace with your EmailJS Template ID
+        "service_pmvnpke",
+        "template_fkbayes",
         formRef.current,
-        "RVQ_Jw3kZSdvBRvPp", // Replace with your EmailJS Public Key
+        "RVQ_Jw3kZSdvBRvPp",
       );
       setStatus("success");
       formRef.current.reset();
@@ -62,40 +92,47 @@ export default function Contact() {
       <div className="container">
         <motion.div
           style={{ textAlign: "center", marginBottom: "20px" }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
         >
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle" style={{ margin: "0 auto" }}>
+          <motion.h2 className="section-title" variants={titleVariants}>Get In Touch</motion.h2>
+          <motion.p className="section-subtitle" style={{ margin: "0 auto" }} variants={subtitleVariants}>
             Have a project in mind? Let's work together!
-          </p>
+          </motion.p>
         </motion.div>
 
-        <motion.div
-          ref={ref}
-          className="contact-content"
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="contact-info">
+        <div className="contact-content">
+          <motion.div 
+            className="contact-info"
+            variants={leftCardsContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
+          >
             {contactInfo.map((info, i) => (
               <motion.a
                 key={i}
                 className="contact-info-card"
                 href={info.href}
+                variants={leftCardVariants}
+                whileHover={{
+                  scale: 1.03,
+                  x: 10,
+                  rotateY: 5,
+                  transformPerspective: 800,
+                  boxShadow: "0 10px 25px rgba(124, 58, 237, 0.15)",
+                  transition: { duration: 0.2 }
+                }}
                 style={{
                   textDecoration: "none",
                   cursor: info.href ? "pointer" : "default",
+                  transformStyle: "preserve-3d"
                 }}
-                initial={{ opacity: 0, x: -30 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
               >
-                <div className="contact-info-icon">{info.icon}</div>
-                <div>
+                <div className="contact-info-icon" style={{ transform: "translateZ(10px)" }}>{info.icon}</div>
+                <div style={{ transform: "translateZ(5px)" }}>
                   <div className="contact-info-label">{info.label}</div>
                   <div className="contact-info-value">{info.value}</div>
                 </div>
@@ -107,21 +144,33 @@ export default function Contact() {
               href="https://wa.me/919102943849?text=Hi%20Ranjan,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!"
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ scale: 1.03 }}
+              variants={leftCardVariants}
+              whileHover={{
+                scale: 1.05,
+                y: -5,
+                rotateX: 10,
+                transformPerspective: 800,
+                boxShadow: "0 15px 30px rgba(37, 211, 102, 0.4)",
+                transition: { duration: 0.2 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              <FaWhatsapp size={22} />
-              Chat on WhatsApp
+              <FaWhatsapp size={22} style={{ transform: 'translateZ(10px)' }} />
+              <span style={{ transform: 'translateZ(5px)' }}>Chat on WhatsApp</span>
             </motion.a>
-          </div>
+          </motion.div>
 
           <motion.div
             className="contact-form-wrapper"
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: 100, rotateY: -25, transformPerspective: 1200 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{
+              scale: 1.01,
+              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
+              transition: { duration: 0.3 }
+            }}
           >
             <form
               ref={formRef}
@@ -186,7 +235,7 @@ export default function Contact() {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 className="btn-primary"
                 disabled={sending}
@@ -195,10 +244,15 @@ export default function Contact() {
                   width: "100%",
                   opacity: sending ? 0.7 : 1,
                 }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -3,
+                  boxShadow: "0 10px 20px rgba(124, 58, 237, 0.3)",
+                }}
               >
                 <FiSend />
                 <span>{sending ? "Sending..." : "Send Message"}</span>
-              </button>
+              </motion.button>
 
               {status === "success" && (
                 <motion.div
@@ -222,7 +276,7 @@ export default function Contact() {
               )}
             </form>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

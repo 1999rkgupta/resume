@@ -58,9 +58,10 @@ export default function Hero() {
           <div className="hero-text">
             <motion.div
               className="hero-badge"
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 2.3, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: -40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="hero-badge-dot" />
               Available for opportunities
@@ -68,9 +69,10 @@ export default function Hero() {
 
             <motion.h1
               className="hero-heading"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.4, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, x: -80, rotateY: 15, transformPerspective: 1000 }}
+              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               Hi all, I'm <span className="name">Ranjan</span>
             </motion.h1>
@@ -78,8 +80,9 @@ export default function Hero() {
             <motion.h2
               className="hero-nickname"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.5, ease: [0.22, 1, 0.36, 1] }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               ( Ranjan Kumar Gupta )
             </motion.h2>
@@ -87,8 +90,9 @@ export default function Hero() {
             <motion.p
               className="hero-role"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.6, ease: [0.22, 1, 0.36, 1] }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               {text}
               <span className="typed-cursor" />
@@ -97,17 +101,19 @@ export default function Hero() {
             <motion.p
               className="hero-desc"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.7, ease: [0.22, 1, 0.36, 1] }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               A passionate Software Engineer with 3+ years of experience specializing in frontend development. I craft responsive, user-friendly web applications using React.js, JavaScript, and modern CSS.
             </motion.p>
 
             <motion.div
               className="hero-buttons"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.8, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 30, x: -40 }}
+              whileInView={{ opacity: 1, y: 0, x: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <a
                 className="btn-primary"
@@ -131,8 +137,9 @@ export default function Hero() {
             <motion.div
               className="hero-socials"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 2.9, ease: [0.22, 1, 0.36, 1] }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
               <a
                 className="social-icon"
@@ -157,9 +164,10 @@ export default function Hero() {
 
           <motion.div
             className="hero-visual"
-            initial={{ opacity: 0, scale: 0.7, x: 60 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, delay: 2.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, scale: 0.85, x: 80, rotateY: -20, transformPerspective: 1000 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0, rotateY: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="hero-avatar-wrapper">
               <div className="hero-avatar-ring" />
@@ -168,24 +176,38 @@ export default function Hero() {
               </div>
               <motion.div
                 className="hero-float-card card-1"
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0, y: [0, -10, 0] }}
+                initial={{ opacity: 0, x: 30, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  scale: 1,
+                  y: [0, -10, 0]
+                }}
+                viewport={{ once: false }}
                 transition={{
-                  opacity: { duration: 0.5, delay: 3.2 },
-                  x: { duration: 0.5, delay: 3.2 },
-                  y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 3.2 }
+                  opacity: { duration: 0.5, delay: 0.8 },
+                  x: { duration: 0.5, delay: 0.8 },
+                  scale: { duration: 0.5, delay: 0.8 },
+                  y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1.3 }
                 }}
               >
                 💻 3+ Years Experience
               </motion.div>
               <motion.div
                 className="hero-float-card card-2"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0, y: [0, 10, 0] }}
+                initial={{ opacity: 0, x: -30, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  scale: 1,
+                  y: [0, 10, 0]
+                }}
+                viewport={{ once: false }}
                 transition={{
-                  opacity: { duration: 0.5, delay: 3.4 },
-                  x: { duration: 0.5, delay: 3.4 },
-                  y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 3.4 }
+                  opacity: { duration: 0.5, delay: 1.0 },
+                  x: { duration: 0.5, delay: 1.0 },
+                  scale: { duration: 0.5, delay: 1.0 },
+                  y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }
                 }}
               >
                 ⚡ React & JavaScript
@@ -200,8 +222,9 @@ export default function Hero() {
         onClick={scrollToAbout}
         style={{ cursor: 'pointer' }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3.5, duration: 0.5 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false }}
+        transition={{ delay: 1.0, duration: 0.5 }}
       >
         <div className="scroll-mouse" />
         <span>Scroll Down</span>

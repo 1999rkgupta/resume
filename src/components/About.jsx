@@ -5,10 +5,13 @@ import { useEffect, useState } from 'react';
 
 function AnimatedCounter({ target, suffix = '' }) {
   const [count, setCount] = useState(0);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.5 });
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.5 });
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView) {
+      setCount(0);
+      return;
+    }
     let start = 0;
     const duration = 1500;
     const step = (timestamp) => {
@@ -36,19 +39,91 @@ const details = [
   { icon: <FiBriefcase />, label: 'Experience', value: 'TestYantra Software' },
 ];
 
-export default function About() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    }
+  }
+};
 
+const left3dVariants = {
+  hidden: { opacity: 0, x: -100, rotateY: 25, transformPerspective: 1200 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    rotateY: 0, 
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
+  }
+};
+
+const right3dVariants = {
+  hidden: { opacity: 0, x: 100, rotateY: -25, transformPerspective: 1200 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    rotateY: 0, 
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
+  }
+};
+
+const topVariants = {
+  hidden: { opacity: 0, y: -45 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' }
+  }
+};
+
+const bottomVariants = {
+  hidden: { opacity: 0, y: 35 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' }
+  }
+};
+
+const statVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.8, rotateX: 15, transformPerspective: 600 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+const detailVariants = {
+  hidden: { opacity: 0, scale: 0.9, y: 20, rotateX: 10, transformPerspective: 600 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+export default function About() {
   return (
     <section className="section" id="about">
       <div className="container">
-        <div ref={ref} className="about-content">
+        <motion.div 
+          className="about-content"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+        >
           {/* Image comes from left */}
           <motion.div
             className="about-image"
-            initial={{ opacity: 0, x: -80 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            variants={left3dVariants}
           >
             <div className="about-image-wrapper">
               <img src="/avatar.png" alt="Ranjan Kumar Gupta" />
@@ -59,14 +134,21 @@ export default function About() {
                 <motion.div
                   key={i}
                   className="about-stat"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                  variants={statVariants}
+                  whileHover={{
+                    scale: 1.05,
+                    rotateY: 10,
+                    rotateX: -5,
+                    z: 15,
+                    boxShadow: "0 15px 30px rgba(124, 58, 237, 0.25)",
+                    transition: { duration: 0.2 }
+                  }}
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <div className="about-stat-number">
+                  <div className="about-stat-number" style={{ transform: 'translateZ(10px)' }}>
                     <AnimatedCounter target={stat.number} suffix={stat.suffix} />
                   </div>
-                  <div className="about-stat-label">{stat.label}</div>
+                  <div className="about-stat-label" style={{ transform: 'translateZ(5px)' }}>{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -75,35 +157,18 @@ export default function About() {
           {/* Info comes from right */}
           <motion.div
             className="about-info"
-            initial={{ opacity: 0, x: 80 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            variants={right3dVariants}
           >
             <div>
-              <motion.h2
-                className="section-title"
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
+              <motion.h2 className="section-title" variants={topVariants}>
                 About Me
               </motion.h2>
-              <motion.p
-                className="section-subtitle"
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
+              <motion.p className="section-subtitle" variants={bottomVariants}>
                 Passionate software engineer with an eye for design
               </motion.p>
             </div>
 
-            <motion.p
-              className="about-bio"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
+            <motion.p className="about-bio" variants={bottomVariants}>
               I'm a Software Engineer with 3+ years of experience specializing in
               front-end development. I craft responsive, user-friendly web applications using
               React.js, JavaScript, and modern CSS. I thrive in collaborative environments,
@@ -117,26 +182,42 @@ export default function About() {
                 <motion.div
                   key={i}
                   className="about-detail"
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
+                  variants={detailVariants}
+                  whileHover={{
+                    scale: 1.03,
+                    rotateY: 5,
+                    rotateX: -3,
+                    z: 10,
+                    borderColor: 'var(--accent-1)',
+                    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
+                    transition: { duration: 0.2 }
+                  }}
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <div className="about-detail-label">{detail.label}</div>
-                  <div className="about-detail-value">{detail.value}</div>
+                  <div className="about-detail-label" style={{ transform: 'translateZ(5px)' }}>{detail.label}</div>
+                  <div className="about-detail-value" style={{ transform: 'translateZ(8px)' }}>{detail.value}</div>
                 </motion.div>
               ))}
               <motion.div
                 className="about-detail"
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.9 }}
+                variants={detailVariants}
+                whileHover={{
+                  scale: 1.03,
+                  rotateY: 5,
+                  rotateX: -3,
+                  z: 10,
+                  borderColor: 'var(--accent-1)',
+                  boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
+                  transition: { duration: 0.2 }
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                <div className="about-detail-label">Education</div>
-                <div className="about-detail-value">BCA, Reva University</div>
+                <div className="about-detail-label" style={{ transform: 'translateZ(5px)' }}>Education</div>
+                <div className="about-detail-value" style={{ transform: 'translateZ(8px)' }}>BCA, Reva University</div>
               </motion.div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 
 const experiences = [
   {
@@ -30,55 +29,83 @@ const experiences = [
   },
 ];
 
-export default function Experience() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+const headerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 }
+  }
+};
 
+const titleVariants = {
+  hidden: { opacity: 0, y: -50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
+
+const subtitleVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
+
+export default function Experience() {
   return (
     <section className="section" id="experience" style={{ background: 'var(--bg-secondary)' }}>
       <div className="container">
         <motion.div
           style={{ textAlign: 'center', marginBottom: '20px' }}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
         >
-          <h2 className="section-title">Experience</h2>
-          <p className="section-subtitle" style={{ margin: '0 auto' }}>
+          <motion.h2 className="section-title" variants={titleVariants}>Experience</motion.h2>
+          <motion.p className="section-subtitle" style={{ margin: '0 auto' }} variants={subtitleVariants}>
             My professional journey and education
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div ref={ref} className="timeline">
+        <div className="timeline">
           {experiences.map((exp, i) => (
             <motion.div
               key={i}
               className="timeline-item"
               initial={{
                 opacity: 0,
-                x: i % 2 === 0 ? -80 : 80,
+                x: i % 2 === 0 ? -120 : 120,
+                rotateY: i % 2 === 0 ? 25 : -25,
+                transformPerspective: 1200
               }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
+              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{
-                duration: 0.7,
-                delay: i * 0.25,
+                duration: 0.8,
                 ease: [0.22, 1, 0.36, 1]
               }}
             >
               <div className="timeline-dot" />
-              <div className="timeline-card">
-                <span className="timeline-badge">{exp.badge}</span>
-                <h3 className="timeline-title">{exp.title}</h3>
-                <p className="timeline-company">{exp.company}</p>
-                <p className="timeline-date">{exp.date}</p>
-                <div className="timeline-desc">
+              <motion.div 
+                className="timeline-card"
+                whileHover={{
+                  scale: 1.03,
+                  rotateY: i % 2 === 0 ? 5 : -5,
+                  rotateX: -3,
+                  z: 20,
+                  boxShadow: "0 15px 35px rgba(124, 58, 237, 0.15)",
+                  transition: { duration: 0.2 }
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <span className="timeline-badge" style={{ transform: 'translateZ(10px)' }}>{exp.badge}</span>
+                <h3 className="timeline-title" style={{ transform: 'translateZ(12px)' }}>{exp.title}</h3>
+                <p className="timeline-company" style={{ transform: 'translateZ(8px)' }}>{exp.company}</p>
+                <p className="timeline-date" style={{ transform: 'translateZ(6px)' }}>{exp.date}</p>
+                <div className="timeline-desc" style={{ transform: 'translateZ(4px)' }}>
                   <ul>
                     {exp.description.map((item, j) => (
                       <li key={j}>{item}</li>
                     ))}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>
