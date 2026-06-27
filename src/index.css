@@ -308,7 +308,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   height: auto;
   color: var(--text-primary);
   position: relative;
@@ -326,7 +326,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .loader-bracket {
   font-family: var(--font-primary);
-  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-size: clamp(1.6rem, 6vw, 4.5rem);
   font-weight: 500;
   color: var(--accent-1);
   display: inline-block;
@@ -352,7 +352,7 @@ h1, h2, h3, h4, h5, h6 {
 .loader-name-word,
 .loader-name-char {
   font-family: 'Agustina Regular', sans-serif;
-  font-size: clamp(3.2rem, 7.5vw, 4.8rem);
+  font-size: clamp(1.8rem, 6.5vw, 4.8rem);
   font-weight: normal;
   /* Subtle, smooth silver-white shimmer line sweep across name */
   background: linear-gradient(120deg, #7c3aed 25%, #06b6d4 42%, #ffffff 50%, #06b6d4 58%, #7c3aed 75%);
@@ -363,6 +363,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 8px 12px 4px;
   margin: 0 -4px;
   animation: shine-sweep 5s linear infinite;
+  white-space: nowrap;
 }
 
 .loader-float-container {
@@ -1194,10 +1195,9 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.25;
 }
 
-/* ===== SERVICES ===== */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 24px;
   margin-top: 60px;
 }
@@ -1568,6 +1568,10 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
   }
 
+  .mobile-menu {
+    overflow-y: auto;
+  }
+
   .hero-heading {
     font-size: clamp(2rem, 8vw, 3rem);
   }
@@ -1594,6 +1598,14 @@ h1, h2, h3, h4, h5, h6 {
 
   .services-grid {
     grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    padding: 32px 24px;
+  }
+
+  .timeline-card {
+    padding: 24px;
   }
 
   .skills-grid-v2 {
@@ -1660,5 +1672,30 @@ h1, h2, h3, h4, h5, h6 {
 
   .about-stat-number {
     font-size: 1.4rem;
+  }
+
+  .service-card {
+    padding: 24px 16px;
+  }
+
+  .timeline-item {
+    padding-left: 32px !important;
+  }
+
+  .timeline-dot {
+    left: 12px !important;
+  }
+
+  .timeline-card {
+    padding: 16px;
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    border-radius: 10px;
   }
 }

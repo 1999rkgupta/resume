@@ -95,7 +95,7 @@ export default function Logo({ size = 40, className = "" }) {
             className="loader-name-word"
             style={{ display: "inline-block" }}
           >
-            Gupta
+            Gupt{"\u200b"}a
           </motion.span>
         </span>
         
